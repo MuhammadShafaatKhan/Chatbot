@@ -17,8 +17,22 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         `Do you have interest in sports?`,
         {
           withAvatar: false,
+          widget: 'yesNoButton',
           delay: 1000
         }
+      );
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  }
+  const handleSportsResp = (resp)  => {
+    console.log('resp: ', resp)
+    const msg = resp? `Nice, you are interested in sports`:`What are you interested in?`
+    const botMessage = 
+      createChatBotMessage(
+        msg
       );
 
     setState((prev) => ({
@@ -33,7 +47,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         return React.cloneElement(child, {
           actions: {
             handleHello,
-            askSportsQuestion
+            askSportsQuestion,
+            handleSportsResp
           },
         });
       })}

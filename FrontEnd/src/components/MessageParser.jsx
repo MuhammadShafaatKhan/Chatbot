@@ -7,6 +7,7 @@ const MessageParser = ({ children, actions }) => {
     console.log(message);
     if (!isHelloHandled){
       actions.handleHello(message);
+      actions.askSportsQuestion()
       setIsHelloHandled(true)
     }
   };

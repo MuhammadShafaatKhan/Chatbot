@@ -1,1 +1,1 @@
-# Chatbot
+Chatbot using [react-chatbot-kit](https://github.com/FredrikOseberg/react-chatbot-kit)

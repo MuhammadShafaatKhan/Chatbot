@@ -9,7 +9,7 @@ import ActionProvider from './components/ActionProvider.jsx';
 import Button from '@mui/material/Button';
 
 function App() {
-  const [showChat, setShowChat] = useState(false)
+  const [showChat, setShowChat] = useState(true)
   function toggleShowChat(){
     setShowChat(!showChat)
   }

@@ -13,6 +13,12 @@ function App() {
   function toggleShowChat(){
     setShowChat(!showChat)
   }
+  function validateInput(msg){
+    if (msg.length > 0)
+      return true
+    else
+      return false
+  }
   return (
     <>
     <Button 
@@ -52,6 +58,7 @@ function App() {
           config={config}
           messageParser={MessageParser}
           actionProvider={ActionProvider}
+          validator={validateInput}
         />
       </div>) : null
     }

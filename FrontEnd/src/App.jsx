@@ -16,7 +16,11 @@ function App() {
     setShowChat(!showChat)
   }
   function validateInput(msg){
-    if (msg.length === 0  || restrictUser)
+    // checks if the msg by user only contains white space:
+    // ref: https://stackoverflow.com/a/10262019/16185710
+    // or restrictUser is true then dont let user to enter message
+    console.log(msg.replace(/\s/g, '').length)
+    if (msg.replace(/\s/g, '').length === 0 || restrictUser)
       return false
     else
       return true

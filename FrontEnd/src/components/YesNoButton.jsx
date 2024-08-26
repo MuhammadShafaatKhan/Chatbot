@@ -7,7 +7,7 @@ const YesNoButton = (props) => {
   return (
     <div>
         <Button 
-          sx={{ m: 0.5 }} 
+          sx={{ m: 0.5, marginLeft:'18.833px' }} 
           variant="contained" 
           onClick={
             () => {

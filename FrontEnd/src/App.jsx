@@ -12,6 +12,15 @@ import { UserRespContext } from './userRespContext.js';
 function App() {
   const [showChat, setShowChat] = useState(true)
   const [restrictUser, setRestrictUser] = useState(false)
+  const saveMessages = (messages, HTMLString) => {
+    console.log('m:', messages)
+    console.log('h:', HTMLString)
+    sessionStorage.setItem('chat_messages', JSON.stringify(messages));
+  };
+  const loadMessages = () => {
+    const messages = JSON.parse(sessionStorage.getItem('chat_messages'));
+    return messages;
+  };
   function toggleShowChat(){
     setShowChat(!showChat)
   }
@@ -65,6 +74,8 @@ function App() {
           messageParser={MessageParser}
           actionProvider={ActionProvider}
           validator={validateInput}
+          saveMessages={saveMessages}
+          messageHistory={loadMessages()}
         />
       </div>) : null
     }

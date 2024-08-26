@@ -20,7 +20,11 @@ function App() {
         position: 'fixed', 
         bottom: '20px', 
         right: '40px',
-        borderRadius: 28 
+        borderRadius: '50%' ,
+        maxWidth: '45px', 
+        maxHeight: '45px', 
+        minWidth: '45px', 
+        minHeight: '45px'
       }} 
       variant="contained" 
       size="large"

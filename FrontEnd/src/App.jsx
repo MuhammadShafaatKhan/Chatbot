@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState} from 'react';
 import Chatbot from 'react-chatbot-kit'
 import 'react-chatbot-kit/build/main.css'
 import SvgIcon from '@mui/material/SvgIcon';
@@ -7,20 +7,22 @@ import config from './config.js';
 import MessageParser from './components/MessageParser.jsx';
 import ActionProvider from './components/ActionProvider.jsx';
 import Button from '@mui/material/Button';
+import { UserRespContext } from './userRespContext.js';
 
 function App() {
   const [showChat, setShowChat] = useState(true)
+  const [restrictUser, setRestrictUser] = useState(false)
   function toggleShowChat(){
     setShowChat(!showChat)
   }
   function validateInput(msg){
-    if (msg.length > 0)
-      return true
-    else
+    if (msg.length === 0  || restrictUser)
       return false
+    else
+      return true
   }
   return (
-    <>
+    <UserRespContext.Provider value={setRestrictUser}>
     <Button 
       sx={{ 
         position: 'fixed', 
@@ -62,8 +64,7 @@ function App() {
         />
       </div>) : null
     }
-    
-    </>
+    </UserRespContext.Provider>
   )
 }
 

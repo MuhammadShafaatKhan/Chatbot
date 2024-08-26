@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import React from 'react';
+import { UserRespContext } from '../userRespContext.js';
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
+  const setRestrictUser = useContext(UserRespContext);
 
   const handleHello = (name) => {
     const botMessage = createChatBotMessage(`Hello ${name}, Nice to meet you.`);
@@ -21,6 +24,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
           delay: 1000
         }
       );
+      setRestrictUser(true)
 
     setState((prev) => ({
       ...prev,
@@ -35,7 +39,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       createChatBotMessage(
         msg
       );
-
+      setRestrictUser(false)
     setState((prev) =>{
       console.log('prev.messages', prev.messages)
       prev.messages.at(-1).widget = undefined

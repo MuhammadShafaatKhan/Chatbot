@@ -7,7 +7,18 @@ import config from './config.js';
 import MessageParser from './components/MessageParser.jsx';
 import ActionProvider from './components/ActionProvider.jsx';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import { UserRespContext } from './userRespContext.js';
+
+// Theme is for adding responsive heading using mui
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
 
 function App() {
   const [showChat, setShowChat] = useState(true)
@@ -36,6 +47,49 @@ function App() {
   }
   return (
     <UserRespContext.Provider value={setRestrictUser}>
+      <ThemeProvider theme={theme}>
+        <Typography 
+          variant="h1"
+          sx = {{
+            color:'#514f4f',
+            textAlign:"center"
+          }}
+        >
+          CHATBOT
+        </Typography>
+        <Typography 
+          variant="h3"
+          gutterBottom 
+          sx = {{
+            color:'#514f4f',
+            textAlign:"center"
+          }}
+        >
+          This chatbot is built using the library: <Link 
+            href="https://github.com/FredrikOseberg/react-chatbot-kit" >
+             react-chatbot-kit
+          </Link>.
+          </Typography>
+          <Typography 
+          variant="body1"
+          gutterBottom 
+          sx = {{
+            color:'#514f4f',
+            textAlign:"center"
+          }}
+        >
+          Its purpose is to 
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus 
+          condimentum est, non porta sem faucibus ornare. Suspendisse consequat 
+          faucibus lorem. Aenean gravida, ex a ultricies dapibus, libero orci 
+          convallis dolor, id condimentum orci dui non lacus. Maecenas feugiat 
+          enim justo. Morbi venenatis, diam eu molestie dictum, est leo ornare 
+          diam, vestibulum ullamcorper magna risus et sem. Fusce hendrerit commodo 
+          turpis, vitae tempor nisl efficitur ut. Duis et justo in tortor pellentesque 
+          ultrices quis nec felis. Nulla accumsan aliquet ipsum, sed viverra dui. 
+          Cras sit amet bibendum neque, quis venenatis arcu.
+          </Typography>
+      </ThemeProvider>
     <Button 
       sx={{ 
         position: 'fixed', 

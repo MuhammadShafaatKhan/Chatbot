@@ -34,7 +34,9 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const handleSportsResp = (resp)  => {
     console.log('resp: ', resp)
     const userRsp = resp? 'Yes':'No'
-    const msg = resp? `Nice, you are interested in sports`:`What are you interested in?`
+    const msg = resp? 
+      `Nice, you are interested in sports` :
+      `Its ok, not every body is interested in sports`
     const botMessage = 
       createChatBotMessage(
         msg

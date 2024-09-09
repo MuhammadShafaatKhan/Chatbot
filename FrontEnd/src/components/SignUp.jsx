@@ -1,4 +1,7 @@
 // Reference: https://github.com/mui/material-ui/blob/v5.16.7/docs/data/material/getting-started/templates/sign-up/SignUp.js
+// TODO: Change background color same as homepage background. And make 
+// sign in / up page content center vertically as well. And background of
+// sign in/up content as white 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -17,7 +20,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    background: {
+      default: "#CADCFC"
+    }
+  }
+});
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -30,15 +39,24 @@ export default function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+    <ThemeProvider 
+      theme={defaultTheme}
+    >
+      <Container 
+        component="main" 
+        maxWidth="xs"
+      >
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent:"center",
+            minHeight: '100vh',
+            margin: "auto",
+            backgroundColor: "#fff",
+            py: { xs: 2, md: 4, lg: 6 }
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

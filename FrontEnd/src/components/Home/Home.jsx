@@ -9,6 +9,7 @@ import ActionProvider from '../ActionProvider.jsx';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
+import ResponsiveAppBar from '../ResponsiveAppBar.jsx';
 
 import {
   createTheme,
@@ -50,16 +51,8 @@ function Home() {
   }
   return (
     <UserRespContext.Provider value={setRestrictUser}>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <ThemeProvider theme={theme}>
-        <Typography 
-          variant="h1"
-          sx = {{
-            color:'#514f4f',
-            textAlign:"center"
-          }}
-        >
-          CHATBOT
-        </Typography>
         <Typography 
           variant="h3"
           gutterBottom 
@@ -73,22 +66,8 @@ function Home() {
              react-chatbot-kit
           </Link>. */}
           This Chatbot will store the user’s responses to their account.
-          So user must be signed in to use the chatbot.<br/>
+          {!getToken()?"So user must be signed in to use the chatbot.": null}<br/>
           </Typography>
-          {!getToken()?
-          <Typography 
-          variant="h4"
-          gutterBottom 
-          sx = {{
-            color:'#514f4f',
-            textAlign:"center"
-          }}
-        >
-          If already have an account: <Link href="/sign-in" >Sign in</Link>.
-          Otherwise: <Link href="/sign-up" >Sign up</Link>.
-          </Typography>:
-          null
-          }
           <Typography 
           variant="body1"
           gutterBottom 
@@ -141,7 +120,6 @@ function Home() {
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 640 512" 
-        className="appChatbotButtonIcon_Lq7z"
       >
         <path 
           fill='white'

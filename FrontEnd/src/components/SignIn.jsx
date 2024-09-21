@@ -11,20 +11,51 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useNavigate } from "react-router-dom";
+import { setToken, getToken } from "../authToken.js";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try {
+      const data = new FormData(event.currentTarget);
+      const authData = {
+        identifier: data.get('email'),
+        password: data.get('password')
+      }
+      console.log(authData)
+       const response = await fetch(`http://localhost:1337/api/auth/local`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(authData),
+      })
+      console.log(response)
+       const  resData = await response.json()
+        console.log(resData)
+          if (resData.jwt === undefined){
+            alert('email or password is incorrect')
+          }
+          else {
+            setToken(resData.jwt)
+            console.log(getToken())
+            navigate("/", { replace: true });
+            //setShowAlert(true)
+            console.log(getToken())
+          }
+      console.log({
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+    } catch (error) {
+      console.error(error);
+    } 
   };
 
   return (

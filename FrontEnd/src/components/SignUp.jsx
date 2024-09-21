@@ -1,4 +1,5 @@
 // Reference: https://github.com/mui/material-ui/blob/v5.16.7/docs/data/material/getting-started/templates/sign-up/SignUp.js
+// TODO: Add profile picture and confirm password fields
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -13,6 +14,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { setToken } from "../authToken.js";
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -20,9 +24,35 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    try {
+      await axios.post(`http://localhost:1337/api/auth/local/register`,
+      {
+       "username": data.get('email'),
+       "email": data.get('email'),
+       "password": data.get('password'),
+       "first_name": data.get('firstName'),
+       "last_name": data.get('lastName'),
+      }, {
+     headers: {
+       'Content-Type': 'application/json'
+     }
+   }).then(async function (response) {
+     console.log('r: ', response)
+     setToken(response.data.jwt)
+   
+   navigate("/", { replace: true });
+   })
+   .catch(function (error) {
+     console.log('e', error);
+   });
+   
+ } catch (error) {
+   console.error(error);
+ }
     console.log({
       email: data.get('email'),
       password: data.get('password'),

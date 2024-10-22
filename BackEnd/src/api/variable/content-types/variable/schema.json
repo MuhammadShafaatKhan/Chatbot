@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "variables",
+  "info": {
+    "singularName": "variable",
+    "pluralName": "variables",
+    "displayName": "Variable"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

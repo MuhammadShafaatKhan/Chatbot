@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "action_operators",
+  "info": {
+    "singularName": "action-operator",
+    "pluralName": "action-operators",
+    "displayName": "Action-operator"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

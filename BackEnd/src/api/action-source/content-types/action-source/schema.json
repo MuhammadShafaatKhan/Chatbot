@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "action_sources",
+  "info": {
+    "singularName": "action-source",
+    "pluralName": "action-sources",
+    "displayName": "Action-source"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

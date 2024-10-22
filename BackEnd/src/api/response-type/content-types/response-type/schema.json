@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "response_types",
+  "info": {
+    "singularName": "response-type",
+    "pluralName": "response-types",
+    "displayName": "Response-Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

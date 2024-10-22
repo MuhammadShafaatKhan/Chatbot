@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "response_optionses",
+  "info": {
+    "singularName": "response-options",
+    "pluralName": "response-optionses",
+    "displayName": "Response-Options",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "placeholder": {
+      "type": "string"
+    },
+    "maxLength": {
+      "type": "integer"
+    },
+    "suggestions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::suggestion.suggestion"
+    }
+  }
+}

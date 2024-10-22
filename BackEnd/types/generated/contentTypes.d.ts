@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -743,46 +790,286 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface ApiActionAction extends Schema.CollectionType {
+  collectionName: 'actions';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
+    singularName: 'action';
+    pluralName: 'actions';
+    displayName: 'Action';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
+    action_operator: Attribute.Relation<
+      'api::action.action',
+      'oneToOne',
+      'api::action-operator.action-operator'
+    >;
+    action_source: Attribute.Relation<
+      'api::action.action',
+      'oneToOne',
+      'api::action-source.action-source'
+    >;
+    instant: Attribute.Boolean;
+    question: Attribute.Relation<
+      'api::action.action',
+      'oneToOne',
+      'api::question.question'
+    >;
+    key: Attribute.Relation<
+      'api::action.action',
+      'oneToOne',
+      'api::variable.variable'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::action.action',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::action.action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiActionOperatorActionOperator extends Schema.CollectionType {
+  collectionName: 'action_operators';
+  info: {
+    singularName: 'action-operator';
+    pluralName: 'action-operators';
+    displayName: 'Action-operator';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Unique;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::action-operator.action-operator',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::action-operator.action-operator',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiActionSourceActionSource extends Schema.CollectionType {
+  collectionName: 'action_sources';
+  info: {
+    singularName: 'action-source';
+    pluralName: 'action-sources';
+    displayName: 'Action-source';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::action-source.action-source',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::action-source.action-source',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'Question';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    question: Attribute.Text;
+    response_option: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::response-options.response-options'
+    >;
+    response_type: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::response-type.response-type'
+    >;
+    variables: Attribute.Relation<
+      'api::question.question',
+      'oneToMany',
+      'api::variable.variable'
+    >;
+    actions: Attribute.Relation<
+      'api::question.question',
+      'oneToMany',
+      'api::action.action'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiResponseOptionsResponseOptions
+  extends Schema.CollectionType {
+  collectionName: 'response_optionses';
+  info: {
+    singularName: 'response-options';
+    pluralName: 'response-optionses';
+    displayName: 'Response-Options';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    placeholder: Attribute.String;
+    maxLength: Attribute.Integer;
+    suggestions: Attribute.Relation<
+      'api::response-options.response-options',
+      'oneToMany',
+      'api::suggestion.suggestion'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::response-options.response-options',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::response-options.response-options',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiResponseTypeResponseType extends Schema.CollectionType {
+  collectionName: 'response_types';
+  info: {
+    singularName: 'response-type';
+    pluralName: 'response-types';
+    displayName: 'Response-Type';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::response-type.response-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::response-type.response-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSuggestionSuggestion extends Schema.CollectionType {
+  collectionName: 'suggestions';
+  info: {
+    singularName: 'suggestion';
+    pluralName: 'suggestions';
+    displayName: 'Suggestion';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::suggestion.suggestion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::suggestion.suggestion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVariableVariable extends Schema.CollectionType {
+  collectionName: 'variables';
+  info: {
+    singularName: 'variable';
+    pluralName: 'variables';
+    displayName: 'Variable';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::variable.variable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::variable.variable',
       'oneToOne',
       'admin::user'
     > &
@@ -804,10 +1091,18 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'api::action.action': ApiActionAction;
+      'api::action-operator.action-operator': ApiActionOperatorActionOperator;
+      'api::action-source.action-source': ApiActionSourceActionSource;
+      'api::question.question': ApiQuestionQuestion;
+      'api::response-options.response-options': ApiResponseOptionsResponseOptions;
+      'api::response-type.response-type': ApiResponseTypeResponseType;
+      'api::suggestion.suggestion': ApiSuggestionSuggestion;
+      'api::variable.variable': ApiVariableVariable;
     }
   }
 }

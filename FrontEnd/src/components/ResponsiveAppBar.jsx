@@ -1,3 +1,4 @@
+// Reference: https://v5.mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';

@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
-import { getToken } from '../authToken.js'; 
+import { getToken, removeToken } from '../authToken.js'; 
 
 const pages = ['Home'];
 const settings = ['Account','Sign out'];
@@ -40,6 +40,13 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    setAnchorElUser(null);
+    removeToken();
+    navigate("/", { replace: true });
+    window.location.reload()
   };
 
   return (
@@ -155,11 +162,24 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+
+            {settings.map((setting) =>{
+                //console.log('s: ', setting)
+                if (setting === 'Sign out'){
+                  return (
+                <MenuItem key={setting} onClick={handleLogout}>   
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+                  )
+                }
+                else {
+                return (
+                <MenuItem key={setting} onClick={handleCloseUserMenu} >   
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              )
+            }
+              })}
             </Menu>
             </>
               ): <Button 

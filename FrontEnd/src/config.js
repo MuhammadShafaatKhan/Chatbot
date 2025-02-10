@@ -1,5 +1,6 @@
 import { createChatBotMessage } from 'react-chatbot-kit';
-import YesNoButton from './components/YesNoButton.jsx'
+import YesNoButton from './components/YesNoButton.jsx';
+import UserAvatar from './components/UserAvatar.jsx';
 
 const config = {
   initialMessages: [
@@ -12,7 +13,10 @@ const config = {
       widgetName: 'yesNoButton',
       widgetFunc: (props) => YesNoButton(props),
     }
-  ]
+  ],
+  customComponents: {
+   userAvatar: () => UserAvatar(),
+ }
 };
 
 export default config;

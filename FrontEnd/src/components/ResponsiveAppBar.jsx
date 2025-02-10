@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import LinearProgress from '@mui/material/LinearProgress';
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from '../authToken.js'; 
 
@@ -22,6 +23,31 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [signedIn, setSignedIn] = React.useState(false);
+  const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+
+  
+    React.useEffect(() => {
+      if (getToken() && !user) {
+      setLoading(true);
+      async function fetchData() {
+        try {
+          const response = await fetch(`http://localhost:1337/api/users/me?populate=*`, {
+            headers: { Authorization: `BEARER ${getToken()}` },
+          })
+          let user = await response.json()
+          console.log('user', user)
+          setUser(user)
+          } catch {
+            console.error('couldnt fetch user in dashboard')
+          } finally {
+            setLoading(false);
+          }
+      }
+      fetchData();
+    }
+  }, []); 
+
   console.log('get: ', getToken())
   if (getToken() && !signedIn){
     setSignedIn(true)
@@ -45,9 +71,18 @@ function ResponsiveAppBar() {
   const handleLogout = () => {
     setAnchorElUser(null);
     removeToken();
+    setUser(null)
     navigate("/", { replace: true });
     window.location.reload()
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    )
+  }
 
   return (
     <AppBar position="static">
@@ -143,7 +178,7 @@ function ResponsiveAppBar() {
                 <>
                 <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Muhammad Shafaat Khan" src="/profileImage" />
+                <Avatar alt={user?.first_name} src="/profileImage" />
               </IconButton>
             </Tooltip>
             <Menu

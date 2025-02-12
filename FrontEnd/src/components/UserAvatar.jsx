@@ -1,10 +1,13 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import { getToken } from '../authToken.js';
+import { useNavigate } from "react-router-dom";
+import { getToken, removeToken } from '../authToken.js';
 
 function UserAvatar() {
     const [userName, setUserName] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
+
+    let navigate = useNavigate(); 
 
     React.useEffect(() => {
         if (getToken() && !userName) {
@@ -15,10 +18,21 @@ function UserAvatar() {
                         headers: { Authorization: `BEARER ${getToken()}` },
                     })
                     let user = await response.json()
-                    console.log('user', user)
-                    setUserName(user.first_name)
+                    if (user.data === null){
+                        console.error('auth token invalid')
+                        removeToken();
+                        navigate("/", { replace: true });
+                        window.location.reload()
+                    }
+                    else {
+                        console.log('user', user)
+                        setUserName(user.first_name)
+                    }
                 } catch {
-                    console.error('couldnt fetch user')
+                    console.error('couldnt fetch user in userAvatar')
+                    removeToken();
+                    navigate("/", { replace: true });
+                    window.location.reload()
                 } finally {
                     setLoading(false);
                 }

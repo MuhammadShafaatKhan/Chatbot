@@ -36,10 +36,21 @@ function ResponsiveAppBar() {
             headers: { Authorization: `BEARER ${getToken()}` },
           })
           let user = await response.json()
-          console.log('user', user)
-          setUser(user)
+          if (user.data === null){
+            console.error('auth token invalid')
+            removeToken();
+            navigate("/", { replace: true });
+            window.location.reload()
+          }
+          else {
+            console.log('user', user)
+            setUser(user)
+          }
           } catch {
             console.error('couldnt fetch user in dashboard')
+            removeToken();
+            navigate("/", { replace: true });
+            window.location.reload()
           } finally {
             setLoading(false);
           }

@@ -55,6 +55,7 @@ export default function SignIn() {
       });
     } catch (error) {
       console.error(error);
+      alert('Database server is not running.')
     } 
   };
 

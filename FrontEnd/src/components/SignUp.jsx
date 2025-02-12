@@ -48,6 +48,8 @@ export default function SignUp() {
    })
    .catch(function (error) {
      console.log('e', error);
+     if (error.message === "Network Error")
+      alert('Database server is not running.')
    });
    
  } catch (error) {

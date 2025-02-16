@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from '../authToken.js'; 
+import { removeMessages } from '../chatMessages.js';
 
 const pages = ['Home'];
 const settings = ['Account','Sign out'];
@@ -39,6 +40,7 @@ function ResponsiveAppBar() {
           if (user.data === null){
             console.error('auth token invalid')
             removeToken();
+            removeMessages();
             navigate("/", { replace: true });
             window.location.reload()
           }
@@ -49,6 +51,7 @@ function ResponsiveAppBar() {
           } catch {
             console.error('couldnt fetch user in dashboard')
             removeToken();
+            removeMessages();
             navigate("/", { replace: true });
             window.location.reload()
           } finally {
@@ -82,6 +85,7 @@ function ResponsiveAppBar() {
   const handleLogout = () => {
     setAnchorElUser(null);
     removeToken();
+    removeMessages();
     setUser(null)
     navigate("/", { replace: true });
     window.location.reload()

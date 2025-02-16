@@ -2,6 +2,7 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from '../authToken.js';
+import { removeMessages } from '../chatMessages.js';
 
 function UserAvatar() {
     const [userName, setUserName] = React.useState(null);
@@ -21,6 +22,7 @@ function UserAvatar() {
                     if (user.data === null){
                         console.error('auth token invalid')
                         removeToken();
+                        removeMessages();
                         navigate("/", { replace: true });
                         window.location.reload()
                     }
@@ -31,6 +33,7 @@ function UserAvatar() {
                 } catch {
                     console.error('couldnt fetch user in userAvatar')
                     removeToken();
+                    removeMessages();
                     navigate("/", { replace: true });
                     window.location.reload()
                 } finally {

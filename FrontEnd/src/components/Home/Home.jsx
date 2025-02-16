@@ -19,6 +19,8 @@ import {
 import Typography from '@mui/material/Typography';
 import { UserRespContext } from '../../userRespContext.js';
 import { getToken } from '../../authToken.js'; 
+import { getMessages, setMessages } from '../../chatMessages.js';
+import { CHAT_MESSAGES } from "../../constants.js";
 
 // Theme is for adding responsive heading using mui
 let theme = createTheme();
@@ -30,10 +32,11 @@ function Home() {
   const saveMessages = (messages, HTMLString) => {
     console.log('m:', messages)
     console.log('h:', HTMLString)
-    sessionStorage.setItem('chat_messages', JSON.stringify(messages));
+    setMessages(JSON.stringify(messages))
   };
   const loadMessages = () => {
-    const messages = JSON.parse(sessionStorage.getItem('chat_messages'));
+    // const messages = JSON.parse(sessionStorage.getItem('chat_messages'));
+    const messages = JSON.parse(getMessages(CHAT_MESSAGES))
     return messages;
   };
   function toggleShowChat(){

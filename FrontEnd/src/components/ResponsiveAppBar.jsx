@@ -62,7 +62,7 @@ function ResponsiveAppBar() {
     }
   }, []); 
 
-  console.log('get: ', getToken())
+  // console.log('get: ', getToken())
   if (getToken() && !signedIn){
     setSignedIn(true)
   }

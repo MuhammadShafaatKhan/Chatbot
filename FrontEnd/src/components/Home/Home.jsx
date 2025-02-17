@@ -17,7 +17,7 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { UserRespContext } from '../../userRespContext.js';
+import { RestrictUserContext } from '../../contexts.js';
 import { getToken } from '../../authToken.js'; 
 import { getMessages, setMessages } from '../../chatMessages.js';
 import { CHAT_MESSAGES } from "../../constants.js";
@@ -53,7 +53,7 @@ function Home() {
       return true
   }
   return (
-    <UserRespContext.Provider value={setRestrictUser}>
+    <RestrictUserContext.Provider value={setRestrictUser}>
       <ResponsiveAppBar></ResponsiveAppBar>
       <ThemeProvider theme={theme}>
         <Typography 
@@ -146,7 +146,7 @@ function Home() {
         />
       </div>) : null
     }
-    </UserRespContext.Provider>
+    </RestrictUserContext.Provider>
   )
 }
 

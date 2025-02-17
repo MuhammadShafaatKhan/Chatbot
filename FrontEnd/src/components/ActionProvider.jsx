@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import React from 'react';
-import { UserRespContext } from '../userRespContext.js';
+import { RestrictUserContext } from '../contexts.js';
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
-  const setRestrictUser = useContext(UserRespContext);
+  const setRestrictUser = useContext(RestrictUserContext);
 
   const handleHello = (name) => {
     const botMessage = createChatBotMessage(`Hello ${name}, Nice to meet you.`);

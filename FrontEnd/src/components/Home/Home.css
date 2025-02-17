@@ -1,5 +1,20 @@
+:root {
+  /* 
+  when disabiling button use below two values
+  --chat-btn-send-opacity: 0.6;
+  --chat-btn-send-cursor: not-allowed; 
+  */
+  --chat-btn-send-opacity: 1;
+  --chat-btn-send-cursor: auto;
+}
+
 .react-chatbot-kit-chat-container {
     position: fixed;
     bottom: 80px;
     right: 40px;
   }
+
+.react-chatbot-kit-chat-btn-send {
+  opacity: var(--chat-btn-send-opacity);
+  cursor: var(--chat-btn-send-cursor);
+}

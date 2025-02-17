@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import React from 'react';
-import { RestrictUserContext } from '../contexts.js';
+import { RestrictUserContext, ChatEndedContext } from '../contexts.js';
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const setRestrictUser = useContext(RestrictUserContext);
+  const setChatEnded = useContext(ChatEndedContext)
 
   const handleHello = (name) => {
     const botMessage = createChatBotMessage(`Hello ${name}, Nice to meet you.`);
@@ -41,7 +42,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       createChatBotMessage(
         msg
       );
-      setRestrictUser(false)
+      setChatEnded(true)
     setState((prev) =>{
       console.log('prev.messages', prev.messages)
       prev.messages.at(-1).widget = undefined

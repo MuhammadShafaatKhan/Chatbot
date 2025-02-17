@@ -17,7 +17,7 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { RestrictUserContext } from '../../contexts.js';
+import { RestrictUserContext, ChatEndedContext } from '../../contexts.js';
 import { getToken } from '../../authToken.js'; 
 import { getMessages, setMessages } from '../../chatMessages.js';
 import { CHAT_MESSAGES } from "../../constants.js";
@@ -29,6 +29,8 @@ theme = responsiveFontSizes(theme);
 function Home() {
   const [showChat, setShowChat] = useState(false)
   const [restrictUser, setRestrictUser] = useState(false)
+  const [chatEnded, setChatEnded] = useState(false)
+
   const saveMessages = (messages, HTMLString) => {
     console.log('m:', messages)
     console.log('h:', HTMLString)
@@ -47,12 +49,22 @@ function Home() {
     // ref: https://stackoverflow.com/a/10262019/16185710
     // or restrictUser is true then dont let user to enter message
     console.log(msg.replace(/\s/g, '').length)
-    if (msg.replace(/\s/g, '').length === 0 || restrictUser)
+    if (chatEnded) {
+      // setting send button's attribute to disabled
+      document.getElementsByClassName("react-chatbot-kit-chat-btn-send")[0].setAttribute('disabled', true)
+      // setting send button's styles as disabled button
+      document.documentElement.style.setProperty('--chat-btn-send-opacity', 0.6);
+      document.documentElement.style.setProperty('--chat-btn-send-cursor', 'not-allowed');
+    }
+    if (msg.replace(/\s/g, '').length === 0 || restrictUser){
       return false
-    else
+    }
+    else{
       return true
+    }
   }
   return (
+    <ChatEndedContext.Provider value={setChatEnded}>
     <RestrictUserContext.Provider value={setRestrictUser}>
       <ResponsiveAppBar></ResponsiveAppBar>
       <ThemeProvider theme={theme}>
@@ -147,6 +159,7 @@ function Home() {
       </div>) : null
     }
     </RestrictUserContext.Provider>
+    </ChatEndedContext.Provider>
   )
 }
 

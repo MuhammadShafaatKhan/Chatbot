@@ -63,6 +63,12 @@ function Home() {
       return true
     }
   }
+
+  // console.log('config: ', JSON.stringify(config))
+  if (sessionStorage.getItem('chatMessages')){
+    config.initialMessages = []
+    // console.log('config2: ', JSON.stringify(config))
+  }
   return (
     <ChatEndedContext.Provider value={setChatEnded}>
     <RestrictUserContext.Provider value={setRestrictUser}>

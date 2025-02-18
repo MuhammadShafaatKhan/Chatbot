@@ -9,10 +9,23 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const handleHello = (name) => {
     const botMessage = createChatBotMessage(`Hello ${name}, Nice to meet you.`);
 
-    setState((prev) => ({
+    setState((prev) => {
+      for (let i = 0; i < prev.messages.length; i++ ){
+        prev.messages[i].uid = i
+      }
+      prev.messages.push({
+        uid: prev.messages.length,
+        id: Math.round(Date.now() * Math.random()),
+        message: `Hello ${name}, Nice to meet you.`,
+        type: 'bot'
+      })
+      sessionStorage.setItem('userEmail-HandleHello', JSON.stringify(prev))
+      prev.messages.pop()
+      // localStorage.setItem('', token);
+      return ({
       ...prev,
       messages: [...prev.messages, botMessage],
-    }));
+    })});
   };
 
   const askSportsQuestion = () => {

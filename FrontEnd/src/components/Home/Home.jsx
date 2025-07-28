@@ -1,5 +1,6 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Chatbot from 'react-chatbot-kit'
+import { createChatBotMessage, createClientMessage} from 'react-chatbot-kit';
 import 'react-chatbot-kit/build/main.css'
 import SvgIcon from '@mui/material/SvgIcon';
 import './Home.css'
@@ -30,6 +31,30 @@ function Home() {
   const [showChat, setShowChat] = useState(false)
   const [restrictUser, setRestrictUser] = useState(false)
   const [chatEnded, setChatEnded] = useState(false)
+  const [configState, setConfigState] = useState(config)
+
+  /*
+  useEffect(() => {
+    if (sessionStorage.getItem('chatMessages')){
+      // TODO: Loop through chatmessages and add them in initial messages
+      config.initialMessages = []
+      let chatMessages = sessionStorage.getItem('chatMessages')
+      for (let i = 0; i < chatMessages.length; i++){
+        if (chatMessages[i].type === 'bot'){
+          if (chatMessages[i].widget)
+            config.initialMessages.push(
+              createChatBotMessage(chatMessages[i].message,{widget: "yesNoButton"})
+            )
+          else
+            config.initialMessages.push(createChatBotMessage(chatMessages[i].message))
+        }
+      }
+      console.log('config2: ', JSON.stringify(config))
+      let c = config
+      setConfigState(c)
+    }
+  }, [])
+*/
 
   const saveMessages = (messages, HTMLString) => {
     console.log('m:', messages)
@@ -64,11 +89,8 @@ function Home() {
     }
   }
 
-  // console.log('config: ', JSON.stringify(config))
-  if (sessionStorage.getItem('chatMessages')){
-    config.initialMessages = []
-    // console.log('config2: ', JSON.stringify(config))
-  }
+  console.log('config: ', JSON.stringify(config))
+  
   return (
     <ChatEndedContext.Provider value={setChatEnded}>
     <RestrictUserContext.Provider value={setRestrictUser}>
@@ -155,7 +177,7 @@ function Home() {
     {
       showChat? (<div>
         <Chatbot
-          config={config}
+          config={configState}
           messageParser={MessageParser}
           actionProvider={ActionProvider}
           validator={validateInput}
